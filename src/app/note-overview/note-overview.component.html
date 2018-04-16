@@ -1,0 +1,6 @@
+<p class="text-right">
+  <span class="badge badge-secondary">
+    Last Update: {{ (lastUpdate | async) | date: 'mediumTime' }} | Total notes: {{ (notes | async).length }}
+  </span>
+</p>
+<button class="btn btn-primary" (click)="clearNotes()">Delete All</button>     
