@@ -11,6 +11,7 @@ import { INote } from '../note';
 })
 export class NoteListComponent implements OnInit {
   @select() notes;
+  stateForLocalStorage: Array<any> = [];
   
   model: INote = {
     id: 0,
@@ -22,10 +23,23 @@ export class NoteListComponent implements OnInit {
 
   constructor(private ngRedux: NgRedux<IAppState>) { }
 
-  ngOnInit() { }
+  ngOnInit() { localStorage.clear(); }
 
   onSubmit() {
-    this.ngRedux.dispatch({type: ADD_NOTE, note: this.model});
+    let data: Object = this.ngRedux.dispatch({type: ADD_NOTE, note: this.model});
+    
+    let stored = JSON.parse(localStorage.getItem("store"));
+
+    if(this.stateForLocalStorage.length == 0) {
+      this.stateForLocalStorage.push(data);
+      // save data to localstorage to retrieve later
+      localStorage.setItem('state', JSON.stringify(this.stateForLocalStorage));
+    } else if (stored !== null) {
+      stored.push(data);
+      // save data to localstorage to retrieve later
+      localStorage.setItem('state', JSON.stringify(stored));
+    }
+       
   }
 
   toggleNote(note) {

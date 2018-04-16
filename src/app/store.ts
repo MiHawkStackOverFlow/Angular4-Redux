@@ -41,10 +41,9 @@ export function rootReducer(state, action) {
               lastUpdate: new Date()  
             });
         case SEARCH_NOTE:
-            // save data to localstorage to retrieve later
-            localStorage.setItem('state', JSON.stringify(state));
             if(action.payload.text === "") {
                 var getState = JSON.parse(localStorage.getItem("state"));
+                console.log("test", getState);
                 return Object.assign({}, state, getState);
             }else {
                 return Object.assign({}, state, {
