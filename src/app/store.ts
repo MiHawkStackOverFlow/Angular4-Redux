@@ -1,5 +1,5 @@
 import { INote } from './note';
-import { ADD_NOTE, TOGGLE_NOTE, REMOVE_NOTE, REMOVE_ALL_NOTES } from './actions';
+import { ADD_NOTE, TOGGLE_NOTE, REMOVE_NOTE, REMOVE_ALL_NOTES, SEARCH_NOTE } from './actions';
 
 export interface IAppState {
     notes: INote[];
@@ -40,6 +40,18 @@ export function rootReducer(state, action) {
               notes: [],
               lastUpdate: new Date()  
             });
+        case SEARCH_NOTE:
+            // save data to localstorage to retrieve later
+            localStorage.setItem('state', JSON.stringify(state));
+            if(action.payload.text === "") {
+                var getState = JSON.parse(localStorage.getItem("state"));
+                return Object.assign({}, state, getState);
+            }else {
+                return Object.assign({}, state, {
+                    notes: state.notes.filter(t => t.description.indexOf(action.payload.text) > -1),
+                    lastUpdate: new Date()
+                });
+            }                
     } 
     return state;
 }
