@@ -2,36 +2,13 @@
 <form (ngSubmit)="onSubmit()" #noteForm="ngForm">
   <div class="form-row">
     <div class="col-auto">
-      <input 
-        type="text"
+      <textarea 
         class="form-control" 
         placeholder="Description" 
         id="description" 
         [(ngModel)]="model.description" 
         name="description" 
-        #description="ngModel">
-    </div>
-    <div class="col-auto">
-        <input 
-          type="text"
-          class="form-control" 
-          placeholder="Responsible" 
-          id="responsible" 
-          [(ngModel)]="model.responsible" 
-          name="responsible" 
-          #responsible="ngModel">
-    </div>
-    <div class="col-auto">
-      <select 
-        name="priority" 
-        id="priority" 
-        class="form-control" 
-        [(ngModel)]="model.priority" 
-        #priority="ngModel">
-        <option value="low">Low</option>
-        <option value="medium">Medium</option>
-        <option value="high">High</option>
-      </select>
+        #description="ngModel" rows="5"></textarea>
     </div>
     <div class="col-auto">
       <button type="submit" class="btn btn-primary">Create</button>
@@ -46,8 +23,6 @@
       <tr>
         <th>#</th>
         <th>Note Description</th>
-        <th>Responsible</th>
-        <th>Priority</th>
         <th></th>
       </tr>
     </thead>
@@ -55,15 +30,10 @@
       <tr *ngFor="let note of notes | async">
         <td><span (click)="toggleNote(note)" [class.completed]="note.isCompleted">{{ note.id }}</span></td>
         <td><span (click)="toggleNote(note)" [class.completed]="note.isCompleted">{{ note.description }}</span></td>
-        <td><span (click)="toggleNote(note)" [class.completed]="note.isCompleted">{{ note.responsible }}</span></td>
-        <td>
-          <span *ngIf="note.priority == 'low'" class="badge badge-success">Low</span>
-          <span *ngIf="note.priority == 'medium'" class="badge badge-warning">Medium</span>
-          <span *ngIf="note.priority == 'high'" class="badge badge-danger">High</span>
-        </td>
         <td><button class="btn btn-primary" (click)="removeNote(note)">Delete</button></td>
       </tr>
     </tbody>
   </table>
+
 </div>
 

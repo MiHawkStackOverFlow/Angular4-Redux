@@ -15,10 +15,7 @@ export class NoteListComponent implements OnInit {
   
   model: INote = {
     id: 0,
-    description: "",
-    responsible: "",
-    priority: "low",
-    isCompleted: false
+    description: ""
   };
 
   constructor(private ngRedux: NgRedux<IAppState>) { }
